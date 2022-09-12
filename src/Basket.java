@@ -1,14 +1,16 @@
 import java.io.*;
+import java.lang.reflect.Array;
 import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 import java.util.Scanner;
 
-public class Basket {
-    String[] product;
-    int[] prices;
-    int[] numbers;
-    int[] sumProducts = new int[3];
-    int[] numberOfProduct = new int[3];
-    int priceOfGoods = 0;
+public class Basket implements Serializable {
+    private static String[] product;
+    private static int[] prices;
+    private static int[] numbers;
+    private static int[] sumProducts = new int[3];
+    private static int[] numberOfProduct = new int[3];
+    private int priceOfGoods = 0;
 
     public Basket(int[] prices, String[] product, int[] numbers) {
         this.prices = prices;
@@ -33,38 +35,32 @@ public class Basket {
         System.out.println("Itogovaya stoimost' " + priceOfGoods + " rub");
     }
 
-
-    public void saveTxt() throws IOException {
-        File file = new File("basket.txt");
-        try (PrintWriter out = new PrintWriter(file);) {
-            for (int i = 0; i < numberOfProduct.length; i++) {
-                if (sumProducts[i] != 0) {
-                    String s = numbers[i] + " " + product[i] + " " + sumProducts[i] + " shtuk, " + "cena " +
-                            prices[i] + " rub/za shtuku, " + "Vsego za dannii tovar " + (prices[i] * sumProducts[i]) + " rub";
-                    out.write(s + "\n");
-                }
+    public static void saveBin() throws IOException {
+        ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("basket.bin"));
+        for (int i = 0; i < numberOfProduct.length; i++) {
+            if (sumProducts[i] != 0) {
+                String s = numbers[i] + " " + product[i] + " " + sumProducts[i] + " shtuk, " + "cena " +
+                        prices[i] + " rub/za shtuku, " + "Vsego za dannii tovar " + (prices[i] * sumProducts[i]) + " rub";
+                out.writeObject(s);
             }
-            out.write("Itogovaya stoimost': ");
-            String itog = priceOfGoods + " rub";
-            out.write(itog + "\n");
-            out.close();
-        } catch (IOException e) {
-            throw new RuntimeException();
         }
+        out.close();
     }
 
-    public static Basket loadFromTxtFile() throws IOException {
-        File file = new File("basket.txt");
-        InputStreamReader in = new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8);
-        System.out.println("Schitivaem s faila:");
-        while (in.ready()) {
-            char read = (char) in.read();
-            System.out.print(read);
+    public static void loadFromBinFile() throws IOException, ClassNotFoundException {
+        ObjectInputStream in = new ObjectInputStream(new FileInputStream("basket.bin"));
+        String d = (String) in.readObject();
+        try {
+            while (!d.equals(null)) {
+                System.out.println(d);
+                d = (String) in.readObject();
+            }
+        } catch (IOException e) {
         }
         in.close();
-        return null;
     }
 }
+
 
 
 
