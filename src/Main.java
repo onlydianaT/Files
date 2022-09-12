@@ -11,7 +11,7 @@ public class Main {
         int[] prices = {50, 14, 80};
         int[] numbers = {1, 2, 3};
 
-        Basket basket = new Basket(prices, product,numbers);
+        Basket basket = new Basket(prices, product, numbers);
         File file = new File("basket.txt");
         if (file.exists()) {
             basket.loadFromTxtFile();
@@ -33,7 +33,6 @@ public class Main {
                 if ("end".equals(in)) {
                     break;
                 } else {
-
                     String[] parts = in.split(" ");
                     int productNumber = Integer.parseInt(parts[0]) - 1;// 0=1.1=2.2=3
                     int productCount = Integer.parseInt(parts[1]);// kolichestvo
@@ -42,7 +41,6 @@ public class Main {
             }
             basket.printCart();
             basket.saveTxt();
-            basket.loadFromTxtFile();
         }
     }
 

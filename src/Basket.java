@@ -3,12 +3,12 @@ import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
 
 public class Basket {
-    String[] product;
-    int[] prices;
-    int[] numbers;
-    int[] sumProducts = new int[3];
-    int[] numberOfProduct = new int[3];
-    int priceOfGoods = 0;
+    private String[] product;
+    private int[] prices;
+    private int[] numbers;
+    private int[] sumProducts = new int[3];
+    private int[] numberOfProduct = new int[3];
+    private int priceOfGoods = 0;
 
     public Basket(int[] prices, String[] product, int[] numbers) {
         this.prices = prices;
