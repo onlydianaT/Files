@@ -47,7 +47,8 @@ public class Basket implements Serializable {
         out.close();
     }
 
-    public static void loadFromBinFile() throws IOException, ClassNotFoundException {
+    public static Basket loadFromBinFile() throws IOException, ClassNotFoundException {
+        Basket basket = new Basket(prices, product, numbers);
         ObjectInputStream in = new ObjectInputStream(new FileInputStream("basket.bin"));
         String d = (String) in.readObject();
         try {
@@ -58,6 +59,7 @@ public class Basket implements Serializable {
         } catch (IOException e) {
         }
         in.close();
+        return basket;
     }
 }
 
