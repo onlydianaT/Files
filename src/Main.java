@@ -11,7 +11,7 @@ public class Main {
         int[] prices = {50, 14, 80};
         int[] numbers = {1, 2, 3};
 
-        Basket basket = new Basket(prices, product, numbers);
+        Basket basket = new Basket(numbers, product, prices);
         File file = new File("basket.txt");
         if (file.exists()) {
             basket.loadFromTxtFile();

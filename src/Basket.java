@@ -1,16 +1,15 @@
 import java.io.*;
 import java.nio.charset.StandardCharsets;
-import java.util.Scanner;
 
 public class Basket {
-    private String[] product;
-    private int[] prices;
-    private int[] numbers;
-    private int[] sumProducts = new int[3];
+    private static String[] product;
+    private static int[] prices;
+    private static int[] numbers;
+    private static int[] sumProducts = new int[3];
     private int[] numberOfProduct = new int[3];
     private int priceOfGoods = 0;
 
-    public Basket(int[] prices, String[] product, int[] numbers) {
+    public Basket(int[] numbers, String[] product, int[] prices) {
         this.prices = prices;
         this.product = product;
         this.numbers = numbers;
@@ -47,22 +46,24 @@ public class Basket {
             out.write("Itogovaya stoimost': ");
             String itog = priceOfGoods + " rub";
             out.write(itog + "\n");
-            out.close();
         } catch (IOException e) {
             throw new RuntimeException();
         }
     }
 
     public static Basket loadFromTxtFile() throws IOException {
+        Basket basket = new Basket(numbers, product, prices);
         File file = new File("basket.txt");
-        InputStreamReader in = new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8);
-        System.out.println("Schitivaem s faila:");
-        while (in.ready()) {
-            char read = (char) in.read();
-            System.out.print(read);
+        try (InputStreamReader in = new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8)) {
+            System.out.println("Schitivaem s faila:");
+            while (in.ready()) {
+                char read = (char) in.read();
+                System.out.print(read);
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
-        in.close();
-        return null;
+        return basket;
     }
 }
 
