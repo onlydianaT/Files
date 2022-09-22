@@ -1,20 +1,19 @@
 import java.io.File;
 import java.io.IOException;
 import java.util.Scanner;
-import java.util.Arrays;
-import java.util.Scanner;
 
 public class Main {
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, ClassNotFoundException {
         String[] product = {"Moloko ", "Xleb ", "Grechka "};
         int[] prices = {50, 14, 80};
         int[] numbers = {1, 2, 3};
 
-        Basket basket = new Basket(numbers, product, prices);
+        Basket basket = new Basket();
+
         File file = new File("basket.txt");
         if (file.exists()) {
-            basket.loadFromTxtFile();
+            basket = basket.loadFromTxtFile(file);
         }
 
         Scanner scanner = new Scanner(System.in);
@@ -22,7 +21,7 @@ public class Main {
         String input = scanner.nextLine();
         if ("no".equals(input)) {
             System.out.println("Vasha korzina:");
-            basket.loadFromTxtFile();
+            basket = basket.loadFromTxtFile(file);
         } else {
             for (int i = 0; i < numbers.length; i++) {
                 System.out.println(numbers[i] + " " + product[i] + prices[i] + " rub/shtuka");
@@ -37,13 +36,12 @@ public class Main {
                     int productNumber = Integer.parseInt(parts[0]) - 1;// 0=1.1=2.2=3
                     int productCount = Integer.parseInt(parts[1]);// kolichestvo
                     basket.addToCart(productNumber, productCount);
+                    basket.saveTxt(file);
                 }
             }
             basket.printCart();
-            basket.saveTxt();
         }
     }
-
 }
 
 

@@ -1,18 +1,22 @@
 import java.io.*;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Basket {
-    private static String[] product;
-    private static int[] prices;
-    private static int[] numbers;
-    private static int[] sumProducts = new int[3];
+    private String[] product = {"Moloko ", "Xleb ", "Grechka "};
+    private int[] prices = {50, 14, 80};
+    private int[] numbers = {1, 2, 3};
+
+    private int[] sumProducts = new int[3];
     private int[] numberOfProduct = new int[3];
     private int priceOfGoods = 0;
 
-    public Basket(int[] numbers, String[] product, int[] prices) {
+    public Basket() {
         this.prices = prices;
         this.product = product;
         this.numbers = numbers;
+
     }
 
     public void addToCart(int productNum, int amount) {
@@ -25,6 +29,10 @@ public class Basket {
         System.out.println("Vasha korzina: ");
         for (int i = 0; i < numberOfProduct.length; i++) {
             if (sumProducts[i] != 0) {
+            }
+        }
+        for (int i = 0; i < numberOfProduct.length; i++) {
+            if (sumProducts[i] != 0) {
                 System.out.println(numbers[i] + " " + product[i] + " " + sumProducts[i] + " shtuk, " + "cena " +
                         prices[i] + " rub/za shtuku, " + "Vsego za dannii tovar " + (prices[i] * sumProducts[i]) + " rub");
             }
@@ -33,9 +41,8 @@ public class Basket {
     }
 
 
-    public void saveTxt() throws IOException {
-        File file = new File("basket.txt");
-        try (PrintWriter out = new PrintWriter(file);) {
+    public void saveTxt(File textfile) throws IOException {
+        try (PrintWriter out = new PrintWriter(textfile);) {
             for (int i = 0; i < numberOfProduct.length; i++) {
                 if (sumProducts[i] != 0) {
                     String s = numbers[i] + " " + product[i] + " " + sumProducts[i] + " shtuk, " + "cena " +
@@ -51,10 +58,9 @@ public class Basket {
         }
     }
 
-    public static Basket loadFromTxtFile() throws IOException {
-        Basket basket = new Basket(numbers, product, prices);
-        File file = new File("basket.txt");
-        try (InputStreamReader in = new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8)) {
+    public static Basket loadFromTxtFile(File textfile) throws IOException {
+        Basket basket = new Basket();
+        try (InputStreamReader in = new InputStreamReader(new FileInputStream(textfile), StandardCharsets.UTF_8)) {
             System.out.println("Schitivaem s faila:");
             while (in.ready()) {
                 char read = (char) in.read();
