@@ -51,8 +51,8 @@ public class Basket {
                 }
             }
             out.write("Itogovaya stoimost': ");
-            String itog = priceOfGoods + " rub";
-            out.write(itog + "\n");
+            String result = priceOfGoods + " rub";
+            out.write(result + "\n");
         } catch (IOException e) {
             throw new RuntimeException();
         }
