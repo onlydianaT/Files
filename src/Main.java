@@ -13,10 +13,10 @@ public class Main {
         int[] numberOfProduct = new int[3];
         int priceOfGoods = 0;
 
-        Basket basket = new Basket(prices, product, numbers);
+        Basket basket = new Basket();
         File file = new File("basket.bin");
         if (file.exists()) {
-            basket.loadFromBinFile();
+            basket=basket.loadFromBinFile(file);
         }
 
         Scanner scanner = new Scanner(System.in);
@@ -43,7 +43,7 @@ public class Main {
                 }
             }
             basket.printCart();
-            basket.saveBin();
+            basket.saveBin(file);
 
         }
 

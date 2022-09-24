@@ -5,14 +5,14 @@ import java.util.Arrays;
 import java.util.Scanner;
 
 public class Basket implements Serializable {
-    private static String[] product;
-    private static int[] prices;
-    private static int[] numbers;
-    private static int[] sumProducts = new int[3];
-    private static int[] numberOfProduct = new int[3];
+    private String[] product = {"Moloko ", "Xleb ", "Grechka "};
+    private int[] prices = {50, 14, 80};
+    private int[] numbers = {1, 2, 3};
+    private int[] sumProducts = new int[3];
+    private int[] numberOfProduct = new int[3];
     private int priceOfGoods = 0;
 
-    public Basket(int[] prices, String[] product, int[] numbers) {
+    public Basket() {
         this.prices = prices;
         this.product = product;
         this.numbers = numbers;
@@ -35,8 +35,8 @@ public class Basket implements Serializable {
         System.out.println("Itogovaya stoimost' " + priceOfGoods + " rub");
     }
 
-    public static void saveBin() throws IOException {
-        ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("basket.bin"));
+    public void saveBin(File file) throws IOException {
+        ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file));
         for (int i = 0; i < numberOfProduct.length; i++) {
             if (sumProducts[i] != 0) {
                 String s = numbers[i] + " " + product[i] + " " + sumProducts[i] + " shtuk, " + "cena " +
@@ -47,9 +47,9 @@ public class Basket implements Serializable {
         out.close();
     }
 
-    public static Basket loadFromBinFile() throws IOException, ClassNotFoundException {
-        Basket basket = new Basket(prices, product, numbers);
-        ObjectInputStream in = new ObjectInputStream(new FileInputStream("basket.bin"));
+    public static Basket loadFromBinFile(File file) throws IOException, ClassNotFoundException {
+        Basket basket = new Basket();
+        ObjectInputStream in = new ObjectInputStream(new FileInputStream(file));
         String d = (String) in.readObject();
         try {
             while (!d.equals(null)) {
