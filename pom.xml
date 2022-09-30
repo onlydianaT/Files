@@ -10,6 +10,7 @@
     <modules>
         <module>cv</module>
     </modules>
+
     <packaging>pom</packaging>
 
     <dependencies>
