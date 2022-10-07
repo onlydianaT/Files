@@ -1,20 +1,29 @@
-import java.io.*;
+import com.google.gson.Gson;
+import org.json.JSONObject;
+import org.json.JSONArray;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
-public class Basket implements Serializable {
+import java.io.*;
+import java.io.FileWriter;
+
+public class Basket {
     private String[] product = {"Moloko ", "Xleb ", "Grechka "};
+
     private int[] prices = {50, 14, 80};
+
     private int[] numbers = {1, 2, 3};
 
     private int[] sumProducts = new int[3];
+
     private int[] numberOfProduct = new int[3];
     private int priceOfGoods = 0;
 
 
     public Basket() {
-        this.prices = prices;
-        this.product = product;
         this.numbers = numbers;
-
+        this.product = product;
+        this.sumProducts = sumProducts;
     }
 
     public void addToCart(int productNum, int amount) {
@@ -36,30 +45,36 @@ public class Basket implements Serializable {
 
     public Basket serialization(File file) throws IOException {
         Basket basket = new Basket();
-        ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file));
+        JSONObject obj = new JSONObject();
         for (int i = 0; i < numberOfProduct.length; i++) {
             if (sumProducts[i] != 0) {
-                String s = numbers[i] + " " + product[i] + " " + sumProducts[i] + " shtuk, " + "cena " +
-                        prices[i] + " rub/za shtuku, " + "Vsego za dannii tovar " + (prices[i] * sumProducts[i]) + " rub";
-                out.writeObject(s);
+                obj.put("number", numbers[i]);
+                obj.put("name of product", product[i]);
+                obj.put("amount", sumProducts[i]);
+                obj.put("price", prices[i]);
+                obj.put("general sum", prices[i] * sumProducts[i]);
+                try (FileWriter files = new FileWriter(file, true)) {
+                    files.write(obj.toString());
+                    files.flush();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         }
-        out.close();
+
         return basket;
     }
 
     public static Basket deserialization(File file) throws IOException, ClassNotFoundException {
         Basket basket = new Basket();
-        ObjectInputStream in = new ObjectInputStream(new FileInputStream(file));
-        String d = (String) in.readObject();
+        JSONParser parser = new JSONParser();
         try {
-            while (!d.equals(null)) {
-                System.out.println(d);
-                d = (String) in.readObject();
-            }
-        } catch (IOException e) {
+            Object obj = parser.parse(new FileReader(file));
+            JSONObject jsonObject = (JSONObject) obj;
+            System.out.println(jsonObject);
+        } catch (IOException | ParseException e) {
+            e.printStackTrace();
         }
-        in.close();
         return basket;
     }
 }

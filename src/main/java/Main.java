@@ -1,4 +1,4 @@
- import org.w3c.dom.Document;
+import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -49,7 +49,7 @@ public class Main {
         logFileName = new File((xPath.evaluate("/config/log/fileName", doc)));
 
         if (loadEnable) {
-            basket = basket.deserialization(fileName);
+            basket.deserialization(fileName);
         }
         Scanner scanner = new Scanner(System.in);
         System.out.println("Vi hotite izmenit' sostav korzini? Vvedite yes or no");
@@ -57,7 +57,7 @@ public class Main {
         if ("no".equals(input)) {
             if (loadEnable) {
                 System.out.println("Vasha korzina:");
-                basket = basket.deserialization(fileName);
+                basket.deserialization(fileName);
             }
         } else {
             for (int i = 0; i < numbers.length; i++) {
@@ -77,12 +77,12 @@ public class Main {
                         clientLog.log(productNumber, productCount);
                         clientLog.exportAsCSV(logFileName);
                     }
-                    if (saveEnable) {
-                        basket.serialization(saveName);
-                    }
                 }
             }
             basket.printCart();
+        }
+        if (saveEnable) {
+            basket.serialization(saveName);
         }
     }
 }
