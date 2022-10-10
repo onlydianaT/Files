@@ -6,31 +6,30 @@ import java.util.*;
 public class ClientLog {
     private int productNum;
     private int amount;
-    private Object[] ar = new Object[2];
-
-    private Map<Integer, Integer> map = new HashMap();
+    private List<Integer> list = new ArrayList<>();
 
     public void log(int productNum, int amount) {
-        map.put(productNum + 1, amount);
+        list.add(productNum + 1);
+        list.add(amount);
     }
 
     public void exportAsCSV(File txtFile) throws IOException {
         try (CSVWriter csvWriter = new CSVWriter(new FileWriter(txtFile, true))) {
-            for (int key : map.keySet()) {
-                String value = String.valueOf(map.get(key));
-                String log = String.valueOf(key + "," + value);
-                try {
-                    FileReader myFile = new FileReader(txtFile);
-                    BufferedReader InputFile = new BufferedReader(myFile);
-                    if (txtFile.exists() && InputFile.readLine() == null) {
-                        String title = "productNum" + "," + "amount";
-                        csvWriter.writeNext(title.split(","));
-                    }
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
+            int size = list.size();
+            int first = list.get(size - 2);
+            int second = list.get(size - 1);
+            String log = String.valueOf(first + "," + second);
+            try {
+                FileReader myFile = new FileReader(txtFile);
+                BufferedReader InputFile = new BufferedReader(myFile);
+                if (txtFile.exists() && InputFile.readLine() == null) {
+                    String title = "productNum" + "," + "amount";
+                    csvWriter.writeNext(title.split(","));
                 }
-                csvWriter.writeNext(log.split(","));
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
+            csvWriter.writeNext(log.split(","));
         }
     }
 }

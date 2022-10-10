@@ -19,3 +19,51 @@
   "general sum":400,
   "name of product":"Grechka "
 }
+{"number":1,
+  "amount":8,
+  "price":50,
+  "general sum":400,
+  "name of product":"Moloko "
+}
+{
+  "number":1,
+  "amount":3,
+  "price":50,
+  "general sum":150,
+  "name of product":"Moloko "
+}
+{
+  "number":2,
+  "amount":2,
+  "price":14,
+  "general sum":28,
+  "name of product":"Xleb "
+}
+{
+  "number":3,
+  "amount":1,
+  "price":80,
+  "general sum":80,
+  "name of product":"Grechka "
+}
+{
+  "number":1,
+  "amount":3,
+  "price":50,
+  "general sum":150,
+  "name of product":"Moloko "
+}
+{
+  "number":1,
+  "amount":3,
+  "price":50,
+  "general sum":150,
+  "name of product":"Moloko "
+}
+{
+  "number":1,
+  "amount":5,
+  "price":50,
+  "general sum":250,
+  "name of product":"Moloko "
+}
