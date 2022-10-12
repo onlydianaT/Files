@@ -4,8 +4,6 @@ import java.io.*;
 import java.util.*;
 
 public class ClientLog {
-    private int productNum;
-    private int amount;
     private List<Integer> list = new ArrayList<>();
 
     public void log(int productNum, int amount) {
